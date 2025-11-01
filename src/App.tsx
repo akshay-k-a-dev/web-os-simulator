@@ -10,7 +10,9 @@ import { Settings } from '@/components/apps/Settings';
 import { Calculator } from '@/components/apps/Calculator';
 import { Toaster } from '@/components/ui/sonner';
 import { useKV } from '@github/spark/hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Power } from '@phosphor-icons/react';
 
 interface WallpaperSettings {
   type: 'gradient' | 'solid' | 'image';
@@ -31,7 +33,7 @@ interface ThemeColors {
 }
 
 const Desktop = () => {
-  const { windows } = useDesktop();
+  const { windows, powerState, boot, wakeUp } = useDesktop();
   const [wallpaper] = useKV<WallpaperSettings>('desktop-wallpaper', {
     type: 'gradient',
     gradient: {
@@ -55,6 +57,24 @@ const Desktop = () => {
       document.documentElement.style.setProperty('--foreground', themeColors.foreground);
     }
   }, [themeColors]);
+
+  useEffect(() => {
+    if (powerState === 'sleeping') {
+      const handleInteraction = () => {
+        wakeUp();
+      };
+      
+      window.addEventListener('mousemove', handleInteraction);
+      window.addEventListener('mousedown', handleInteraction);
+      window.addEventListener('keydown', handleInteraction);
+      
+      return () => {
+        window.removeEventListener('mousemove', handleInteraction);
+        window.removeEventListener('mousedown', handleInteraction);
+        window.removeEventListener('keydown', handleInteraction);
+      };
+    }
+  }, [powerState, wakeUp]);
 
   const getWallpaperStyle = (): React.CSSProperties => {
     if (!wallpaper) {
@@ -108,6 +128,47 @@ const Desktop = () => {
         return <div className="p-4">Unknown application</div>;
     }
   };
+
+  if (powerState === 'booting') {
+    return (
+      <div className="h-screen w-screen overflow-hidden bg-background flex items-center justify-center">
+        <div className="flex flex-col items-center gap-6">
+          <div className="relative">
+            <div className="w-20 h-20 border-4 border-accent/20 rounded-full"></div>
+            <div className="absolute inset-0 w-20 h-20 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <h2 className="text-2xl font-bold text-foreground">WebOS</h2>
+            <p className="text-muted-foreground text-sm">Starting up...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (powerState === 'shutdown') {
+    return (
+      <div className="h-screen w-screen overflow-hidden bg-background flex items-center justify-center">
+        <div className="flex flex-col items-center gap-6">
+          <Button
+            size="lg"
+            variant="default"
+            className="h-16 w-16 rounded-full"
+            onClick={boot}
+          >
+            <Power className="h-8 w-8" />
+          </Button>
+          <p className="text-muted-foreground text-sm">Click to start</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (powerState === 'sleeping') {
+    return (
+      <div className="h-screen w-screen overflow-hidden bg-black cursor-pointer" />
+    );
+  }
 
   return (
     <div 

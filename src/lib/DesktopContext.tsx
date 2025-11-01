@@ -3,6 +3,8 @@ import { FileSystem, createFileSystem } from '@/lib/fileSystem';
 import { WindowState, FileNode } from '@/lib/types';
 import { useKV } from '@github/spark/hooks';
 
+type PowerState = 'running' | 'shutdown' | 'sleeping' | 'booting';
+
 interface DesktopContextType {
   fileSystem: FileSystem;
   saveFileSystem: () => void;
@@ -15,6 +17,12 @@ interface DesktopContextType {
   maximizeWindow: (id: string) => void;
   currentPath: string;
   setCurrentPath: (path: string) => void;
+  powerState: PowerState;
+  shutdown: () => void;
+  restart: () => void;
+  sleep: () => void;
+  wakeUp: () => void;
+  boot: () => void;
 }
 
 const DesktopContext = createContext<DesktopContextType | null>(null);
@@ -33,6 +41,7 @@ export const DesktopProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [windows, setWindows] = useState<WindowState[]>([]);
   const [nextZIndex, setNextZIndex] = useState(1000);
   const [currentPath, setCurrentPath] = useState('/home/user');
+  const [powerState, setPowerState] = useState<PowerState>('booting');
 
   const saveFileSystem = useCallback(() => {
     setFsRoot(() => fileSystem.getRoot());
@@ -98,6 +107,43 @@ export const DesktopProvider: React.FC<{ children: React.ReactNode }> = ({ child
     );
   }, []);
 
+  const shutdown = useCallback(() => {
+    saveFileSystem();
+    setWindows([]);
+    setPowerState('shutdown');
+  }, [saveFileSystem]);
+
+  const restart = useCallback(() => {
+    saveFileSystem();
+    setWindows([]);
+    setPowerState('shutdown');
+    setTimeout(() => {
+      setPowerState('booting');
+      setTimeout(() => {
+        setPowerState('running');
+      }, 2000);
+    }, 500);
+  }, [saveFileSystem]);
+
+  const sleep = useCallback(() => {
+    setPowerState('sleeping');
+  }, []);
+
+  const wakeUp = useCallback(() => {
+    setPowerState('running');
+  }, []);
+
+  const boot = useCallback(() => {
+    setPowerState('booting');
+    setTimeout(() => {
+      setPowerState('running');
+    }, 2000);
+  }, []);
+
+  useEffect(() => {
+    boot();
+  }, []);
+
   return (
     <DesktopContext.Provider
       value={{
@@ -112,6 +158,12 @@ export const DesktopProvider: React.FC<{ children: React.ReactNode }> = ({ child
         maximizeWindow,
         currentPath,
         setCurrentPath,
+        powerState,
+        shutdown,
+        restart,
+        sleep,
+        wakeUp,
+        boot,
       }}
     >
       {children}

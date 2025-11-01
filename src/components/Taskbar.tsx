@@ -7,14 +7,14 @@ import {
   FileText,
   Globe,
   MusicNote,
-  Power,
   Gear,
   Calculator as CalculatorIcon,
 } from '@phosphor-icons/react';
 import { Separator } from '@/components/ui/separator';
+import { PowerMenu } from '@/components/PowerMenu';
 
 export const Taskbar: React.FC = () => {
-  const { windows, addWindow, focusWindow, minimizeWindow } = useDesktop();
+  const { windows, addWindow, focusWindow, minimizeWindow, shutdown, restart, sleep } = useDesktop();
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -150,9 +150,11 @@ export const Taskbar: React.FC = () => {
         <div className="text-primary-foreground/70">{formatDate(time)}</div>
       </div>
 
-      <Button size="icon" variant="ghost" className="h-9 w-9" title="Power">
-        <Power className="h-5 w-5" />
-      </Button>
+      <PowerMenu 
+        onShutdown={shutdown}
+        onRestart={restart}
+        onSleep={sleep}
+      />
     </div>
   );
 };

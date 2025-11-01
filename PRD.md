@@ -62,11 +62,18 @@ A browser-based lightweight Linux desktop environment that provides a fully func
 - **Success criteria**: Supports common formats browser can handle, smooth playback, visual feedback, keyboard controls (space to pause)
 
 ### Taskbar & System Tray
-- **Functionality**: App launcher, open window indicators, clock, system status
+- **Functionality**: App launcher, open window indicators, clock, system status, power menu
 - **Purpose**: Primary navigation and system awareness
 - **Trigger**: Always visible at bottom of screen
-- **Progression**: View running apps → Click to focus/minimize windows → Check time → Access system menu
+- **Progression**: View running apps → Click to focus/minimize windows → Check time → Access system menu → Power menu for shutdown/restart/sleep
 - **Success criteria**: Always accessible, shows accurate state, smooth animations on interactions
+
+### Power Management
+- **Functionality**: Shutdown, restart, and sleep modes with appropriate animations and state transitions
+- **Purpose**: Complete OS experience with power control
+- **Trigger**: Clicking power button in taskbar
+- **Progression**: Click power button → Select shutdown/restart/sleep → System transitions to appropriate state → Shutdown shows power button to boot → Restart automatically reboots with animation → Sleep blacks screen and wakes on any input
+- **Success criteria**: Shutdown persists file system and shows only power button, restart automatically boots after brief delay with loading animation, sleep immediately blacks screen and wakes instantly on mouse/keyboard input, boot animation displays for 2 seconds before desktop loads
 
 ### Settings Panel
 - **Functionality**: Customize desktop wallpaper (gradient/solid color presets and custom colors), modify theme colors (primary, accent, background, foreground), real-time preview, persist preferences
