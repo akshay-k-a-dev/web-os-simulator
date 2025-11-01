@@ -9,6 +9,7 @@ import {
   MusicNote,
   Power,
   Gear,
+  Calculator as CalculatorIcon,
 } from '@phosphor-icons/react';
 import { Separator } from '@/components/ui/separator';
 
@@ -56,6 +57,13 @@ export const Taskbar: React.FC = () => {
       icon: MusicNote,
       component: 'media-player',
       defaultSize: { width: 600, height: 500 },
+    },
+    {
+      id: 'calculator',
+      name: 'Calculator',
+      icon: CalculatorIcon,
+      component: 'calculator',
+      defaultSize: { width: 400, height: 600 },
     },
     {
       id: 'settings',

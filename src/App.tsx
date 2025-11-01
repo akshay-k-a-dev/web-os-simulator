@@ -7,6 +7,7 @@ import { TextEditor } from '@/components/apps/TextEditor';
 import { Browser } from '@/components/apps/Browser';
 import { MediaPlayer } from '@/components/apps/MediaPlayer';
 import { Settings } from '@/components/apps/Settings';
+import { Calculator } from '@/components/apps/Calculator';
 import { Toaster } from '@/components/ui/sonner';
 import { useKV } from '@github/spark/hooks';
 import { useEffect } from 'react';
@@ -101,6 +102,8 @@ const Desktop = () => {
         return <MediaPlayer />;
       case 'settings':
         return <Settings />;
+      case 'calculator':
+        return <Calculator />;
       default:
         return <div className="p-4">Unknown application</div>;
     }
