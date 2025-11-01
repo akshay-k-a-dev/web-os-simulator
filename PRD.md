@@ -82,6 +82,15 @@ A browser-based lightweight Linux desktop environment that provides a fully func
 - **Progression**: Open settings window → Choose wallpaper tab or theme tab → Select preset or customize colors → Preview changes → Apply to desktop → Settings persist across sessions
 - **Success criteria**: Changes apply immediately and smoothly, presets are visually appealing, custom color inputs support OKLCH format, all preferences persist via KV storage
 
+## Deployment
+
+### GitHub Pages Deployment
+- **Functionality**: Automated CI/CD workflow deploys to GitHub Pages on every push to main branch
+- **Purpose**: Easy hosting and sharing of the desktop environment publicly
+- **Trigger**: Push to main branch or manual workflow dispatch
+- **Progression**: Push code → GitHub Actions runs → Build production bundle → Add .nojekyll file → Deploy to Pages → Site live at github.io URL
+- **Success criteria**: Workflow completes successfully, site accessible at GitHub Pages URL, all assets load correctly with proper base path, deployment takes under 5 minutes
+
 ## Edge Case Handling
 
 - **Empty State**: File manager shows helpful "Create your first file" message when directories are empty
