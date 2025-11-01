@@ -8,6 +8,7 @@ import {
   Globe,
   MusicNote,
   Power,
+  Gear,
 } from '@phosphor-icons/react';
 import { Separator } from '@/components/ui/separator';
 
@@ -55,6 +56,13 @@ export const Taskbar: React.FC = () => {
       icon: MusicNote,
       component: 'media-player',
       defaultSize: { width: 600, height: 500 },
+    },
+    {
+      id: 'settings',
+      name: 'Settings',
+      icon: Gear,
+      component: 'settings',
+      defaultSize: { width: 600, height: 700 },
     },
   ];
 

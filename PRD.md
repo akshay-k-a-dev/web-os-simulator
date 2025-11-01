@@ -68,6 +68,13 @@ A browser-based lightweight Linux desktop environment that provides a fully func
 - **Progression**: View running apps → Click to focus/minimize windows → Check time → Access system menu
 - **Success criteria**: Always accessible, shows accurate state, smooth animations on interactions
 
+### Settings Panel
+- **Functionality**: Customize desktop wallpaper (gradient/solid color presets and custom colors), modify theme colors (primary, accent, background, foreground), real-time preview, persist preferences
+- **Purpose**: Personalization and customization of the desktop environment
+- **Trigger**: Clicking settings icon in taskbar
+- **Progression**: Open settings window → Choose wallpaper tab or theme tab → Select preset or customize colors → Preview changes → Apply to desktop → Settings persist across sessions
+- **Success criteria**: Changes apply immediately and smoothly, presets are visually appealing, custom color inputs support OKLCH format, all preferences persist via KV storage
+
 ## Edge Case Handling
 
 - **Empty State**: File manager shows helpful "Create your first file" message when directories are empty
